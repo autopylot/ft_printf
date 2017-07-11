@@ -1,0 +1,5 @@
+Undefined symbols for architecture x86_64:
+  "_ft_strchr", referenced from:
+      _n_fmtspec in test-a01a49.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)

@@ -1,125 +1,76 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.c                                           :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/14 15:00:18 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/20 17:07:54 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
-void print_tbl(t_printf *ptbl)
+static void print_format(t_printf *pf)
 {
-	int i = 0;
-	puts(ptbl->fmt_string);
-	printf("%d\n", ptbl->len);
-	while (i < ptbl->len)
-	{
-		printf("Left adjust: %d\n", ptbl->fmt_tbl[i].left);
-		printf("Pre zero: %d\n", ptbl->fmt_tbl[i].pre_zero);
-		printf("Pad zero: %d\n", ptbl->fmt_tbl[i].pad_zero);
-		printf("Space before pos: %d\n", ptbl->fmt_tbl[i].space);
-		printf("Min width: %d\n", ptbl->fmt_tbl[i].p_width);
-		printf("Precision: %d\n", ptbl->fmt_tbl[i].precision);
-		printf("Length: %u\n", ptbl->fmt_tbl[i].length);
-		printf("Spec tag: %c\n", ptbl->fmt_tbl[i].spec);
-		i++;
-	}
+	printf("Left: %d\n", pf->fspec.left);
+	printf("Prefix: %d\n", pf->fspec.prefix);
+	printf("Plus: %d\n", pf->fspec.plus);
+	printf("Pad zero: %d\n", pf->fspec.pad_zero);
+	printf("Space: %d\n", pf->fspec.space);
+	printf("Width: %d\n", pf->fspec.p_width);
+	printf("Precision: %d\n", pf->fspec.precision);
+	printf("Length: %d\n", pf->fspec.length);
+	printf("Spec tag: %c\n", pf->fspec.spec);
+	printf("Buffer is: %s\n", pf->fspec.buffer);
 }
 
-/*
-
-*/
-static	int	n_fmtspec(char *fmt_str)
+static void init_pf(t_printf *pf, const char *format)
 {
-	char	*fmtptr;
-	int		n_specs;
-
-	n_specs = 0;
-	fmtptr = (char*)fmt_str;
-	while (*fmtptr)
-	{
-		if (*fmtptr++ == '%')
-		{
-			if (*fmtptr == '%')
-				++fmtptr;
-			while (ft_strchr(FLAGS, *fmtptr))
-			 	++fmtptr;
-			while (ft_strchr(NUMBER, *fmtptr))
-				++fmtptr;
-			while (ft_strchr(LEN, *fmtptr))
-				++fmtptr;
-		 	if (ft_strchr(SPEC, *fmtptr))
-					n_specs++;
-		}
-		else
-			fmtptr++;
-	}
-	return (n_specs);
+	pf->format = (char*)format;
+	pf->buffer = NULL;
+	pf->fspec.left = 0;
+	pf->fspec.pad = 0;
+	pf->fspec.plus = 0;
+	pf->fspec.space = 0;
+	pf->fspec.prefix = 0;
+	pf->fspec.width = 0;
+	pf->fspec.precision = -1;
+	pf->fspec.length = 0;
+	pf->fspec.spec = ' ';
+	pf->fspec.sints = 0;
+	pf->fspec.uints = 0;
+	pf->fspec.buffer = NULL;
 }
 
-/*
-	Initializes fmt tag struct
-*/
-void init_fmt_tag(t_fmt_tag *tag)
-{
-	tag->left = 0;
-	tag->pre_zero = 0;
-	tag->pad_zero = 0;
-	tag->space = 0;
-	tag->p_width = 0;
-	tag->precision = -1;
-	tag->length = none;
-	tag->spec = ' ';
-	tag->len = 0;
-	tag->fmt_buf = NULL;
-}
-
-/*
-	Initializes printf struct along with fmt_tbl array inside
-*/
-void init_printf(t_printf *ptbl, char *fmt_str)
-{
-	int i;
-
-	i = -1;
-	(*ptbl).fmt_string = fmt_str;
-	(*ptbl).len = n_fmtspec(fmt_str);
-	(*ptbl).fmt_tbl = (t_fmt_tag*)malloc(sizeof(t_fmt_tag) * ((*ptbl).len));
-	while (++i < (*ptbl).len)
-		init_fmt_tag(&((*ptbl).fmt_tbl[i]));
-}
-
-/*
-	Returns the total length of the output string
-*/
 int	ft_printf(const char *format,...)
 {
-	t_printf	ptbl;
+	t_printf	pf;
 	int 		len;
 
-	init_printf(&ptbl, (char*)format);
-	va_start(ptbl.ap, format);
-	if (parse_tag(&ptbl))
-		print_tbl(&ptbl);
-	//call parse
-	//len = va_dispatch();
+	init_pf(&pf, format);
+	va_start(pf.ap, format);
+	while (*format)
+	{
+		if (*format == '%')
+			parse_fspec(pf, &format);
+		else
+			pf->buffer =
+	}
+	if (parse_fspec(&pf))
+	{
+		print_format(&pf);
+	}
 	len = 0;
-	va_end(ptbl.ap);
+	va_end(pf.ap);
 	return (len);
 }
 
-
-
 int main()
 {
-	int x = 5;
-	char c = 'A';
-
-	ft_printf("Print this int: %-# 09.58lld and this char: ", x, c);
+ 	//char *c = "helloldkj dfgd dfg4dvc%";
+	//int a = 1;
+	ft_printf("Print this int: %+05d and this char: ", 1);
 	return (0);
 }

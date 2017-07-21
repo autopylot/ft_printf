@@ -6,35 +6,64 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/13 14:55:09 by wlin              #+#    #+#              #
-#    Updated: 2017/07/17 10:56:03 by wlin             ###   ########.fr        #
+#    Updated: 2017/07/19 20:57:48 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME = libftprintf.a
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-HEADER = libft.h
+SRC_DIR = src/
+BUILD_DIR = build/
+INC_DIR = include/
 
-OBJ = $(SRC:.c=.o)
+SRC_FILE = \
+ft_printf \
+parse_tag
 
-SRC = *.c
+TEST_FILE = \
+test.c
 
+SRC = \
+$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILE)))\
+
+OBJ = \
+$(addprefix $(BUILD_DIR), $(addsuffix .o, $(SRC_FILE)))\
 
 all: $(NAME)
 
-$(NAME):
-	@$(CC) $(CFLAGS) -c $(SRC) -I $(HEADER)
+runtest:
+	@gcc ft_printf.c fetch_spec.c fmt_itoa_base.c parse_fspec.c pdispatch.c fmt_numbers.c fetch_width.c ft_printf.h ../libft/libft.a -I ../libft
+	@./a.out
+	@rm -f ./a.out
+
+$(NAME): $(OBJ)
+	@make -C $(LIBFT)
+	@cp libft/libft.a ./$(NAME)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
+	@echo "\033[32mBinary \033[1;32m$(NAME)\033[1;0m\033[32m created.\033[0m"
 
+$(OBJ): $(SRC) $(BUILD_DIR)
+	@$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
+
+$(BUILD_DIR):
+	@mkdir $(BUILD_DIR)
+
+$(LIBFT): force
+	@cd libft && $(MAKE)
+
+force:
+		@true
 clean:
-	@rm -f $(OBJ)
+	@rm -rf $(BUILD_DIR);
+	@cd libft && $(MAKE) fclean
 
 fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: clean fclean re
+.PHONY: all clean fclean re

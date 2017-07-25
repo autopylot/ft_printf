@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 20:19:24 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/20 14:52:02 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/24 11:27:38 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdbool.h>
 # include <wchar.h>
 
-#define F_FLAG(x)	(x == '-' || x == '#' || x == ' ' || x == '0')
+#define F_FLAG(x)	(x == '-' || x == '#' || x == ' ' || x == '0' || x == '+')
 #define F_NUM(x)	((x >= '0' && x <= '9') || x == '.')
 #define F_LEN(x) 	(x == 'h' || x == 'l' || x == 'j' || x == 'z')
 
@@ -45,8 +45,8 @@
 
 typedef struct	s_fmt_spec
 {
-	bool		left;
 	bool		pad;
+	bool		left;
 	bool		plus;
 	bool 		space;
 	bool		prefix;
@@ -61,25 +61,31 @@ typedef struct	s_fmt_spec
 
 typedef struct	s_printf
 {
-	char		*format;
-	char		*buffer;
+	int			len;
 	va_list		ap;
 	t_fmt_spec	fspec;
 }				t_printf;
 
+int format_left(t_printf *pf);
 int		ft_printf(const char *format,...);
-int		parse_fspec(t_printf *pf);
+void 	print_format(t_printf *pf);
+int		parse_fspec(t_printf *pf, const char **fmt);
 int 	pdispatch(t_printf *pf);
+char 	*strjoin_c(char *buffer, char c, int len, char free);
 int 	fetch_spec(t_printf *pf);
-int 	fmt_precision(t_printf *pf);
-int 	fetch_width(t_printf *pf);
+int 	format_precision(t_printf *pf);
+int 	format_width(t_printf *pf);
 int 	format_prefix(t_printf *pf);
 char 	*sitoa_base(t_printf *pf, int base);
 char 	*uitoa_base(t_printf *pf, int base);
 int		pad_zero(t_printf *pf, int pad, char c);
- void insert_substring(char *a, char *b, int position);
- int format_plus(t_printf *pf);
- int format_space(t_printf *pf);
+ void 	insert_substring(char *a, char *b, int position);
+ char 	*strjoin_c(char *buffer, char c, int len, char free);
+ int 	format_plus(t_printf *pf);
+ int 	format_space(t_printf *pf);
+
+ char *set_wide(wchar_t c);
+ char *set_wstr(wchar_t *wstr);
 /*
 **	libft functions
 */

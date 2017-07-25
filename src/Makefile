@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/13 14:55:09 by wlin              #+#    #+#              #
-#    Updated: 2017/07/19 20:57:48 by wlin             ###   ########.fr        #
+#    Updated: 2017/07/22 17:59:45 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,15 @@ ft_printf \
 parse_tag
 
 TEST_FILE = \
-test.c
+fetch_spec.c \
+format_flags.c \
+format_itoa.c \
+format_precision.c \
+format_wchar.c \
+format_width.c \
+parse_fspec.c \
+pdispatch.c \
+ft_printf.c
 
 SRC = \
 $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILE)))\
@@ -35,7 +43,7 @@ $(addprefix $(BUILD_DIR), $(addsuffix .o, $(SRC_FILE)))\
 all: $(NAME)
 
 runtest:
-	@gcc ft_printf.c fetch_spec.c fmt_itoa_base.c parse_fspec.c pdispatch.c fmt_numbers.c fetch_width.c ft_printf.h ../libft/libft.a -I ../libft
+	@gcc $(TEST_FILE) ft_printf.h ../libft/libft.a -I ../libft
 	@./a.out
 	@rm -f ./a.out
 

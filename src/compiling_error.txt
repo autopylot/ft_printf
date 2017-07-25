@@ -1,0 +1,4 @@
+/nfs/2017/w/wlin/printf/src/test.c:122:22: error: flag ' ' results in undefined behavior with 'o' conversion specifier [-Werror,-Wformat]
+        printf("This is a -% o-\n", 90);
+                           ~^~
+1 error generated.

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fmt_numbers.c                                      :+:      :+:    :+:   */
+/*   format_precision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 14:01:56 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/20 13:06:02 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/22 18:04:51 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-  char *substring(char *string, int position, int length)
+char *substring(char *string, int position, int length)
 {
   char *pointer;
   int c;
@@ -27,7 +27,7 @@
   return pointer;
 }
 
-  void insert_substring(char *a, char *b, int position)
+void insert_substring(char *a, char *b, int position)
 {
   char *f, *e;
   int length;
@@ -43,21 +43,7 @@
   free(e);
 }
 
-
-int digit_len(int n)
-{
-	int len;
-
-	printf("Digit len: %d\n", n);
-	len = 0;
-	if (n == 0)
-		return (1);
-	while (n && ++len)
-		n /= 10;
-	return (len);
-}
-
-int sig_digits(char *buffer)
+static int sig_num(char *buffer)
 {
 	int i;
 
@@ -71,6 +57,7 @@ int sig_digits(char *buffer)
 	}
 	return (i);
 }
+
 int	pad_zero(t_printf *pf, int pad, char c)
 {
 	char *s;
@@ -85,32 +72,30 @@ int	pad_zero(t_printf *pf, int pad, char c)
 	return (1);
 }
 
-
-int fmt_precision(t_printf *pf)
+int format_precision(t_printf *pf)
 {
 	int pad;
 	char *s;
-	if (pf->fspec.precision == 0 && pf->fspec.buffer[0] == '0')
+
+	if (pf->fspec.precision == -1)
+		return (1);
+	if (ft_strchr("diouxX", pf->fspec.spec))
+	{
+		if (pf->fspec.precision == 0 && pf->fspec.buffer[0] == '0')
+		{
 			pf->fspec.buffer[0] = '\0';
-	else if (pf->fspec.spec == 'd' || pf->fspec.spec == 'i')
-	{
-		if (pf->fspec.precision <= digit_len(pf->fspec.sints))
-			return (0);
-		pad = pf->fspec.precision - digit_len(pf->fspec.sints);
-		return (pad_zero(pf, pad, '0'));
-	}
-	else if ((ft_strchr("ouxX", pf->fspec.spec)))
-	{
-		printf("Precision: %d, digit len: %d\n", pf->fspec.precision, sig_digits(pf->fspec.buffer));
-		if (pf->fspec.precision <= sig_digits(pf->fspec.buffer))
-			return (0);
-		pad = pf->fspec.precision - sig_digits(pf->fspec.buffer);
+			return (1);
+		}
+		else if (pf->fspec.precision <= sig_num(pf->fspec.buffer))
+			return (1);
+		pad = pf->fspec.precision - sig_num(pf->fspec.buffer);
 		return (pad_zero(pf, pad, '0'));
 	}
 	else if (pf->fspec.spec == 's')
 	{
 		if (pf->fspec.precision < ft_strlen(pf->fspec.buffer))
 			pf->fspec.buffer[pf->fspec.precision] = '\0';
+		return (1);
 	}
 	return (0);
 }

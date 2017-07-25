@@ -6,30 +6,29 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/20 17:07:54 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/24 11:36:02 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void print_format(t_printf *pf)
+void print_format(t_printf *pf)
 {
 	printf("Left: %d\n", pf->fspec.left);
 	printf("Prefix: %d\n", pf->fspec.prefix);
 	printf("Plus: %d\n", pf->fspec.plus);
-	printf("Pad zero: %d\n", pf->fspec.pad_zero);
+	printf("Pad zero: %d\n", pf->fspec.pad);
 	printf("Space: %d\n", pf->fspec.space);
-	printf("Width: %d\n", pf->fspec.p_width);
+	printf("Width: %d\n", pf->fspec.width);
 	printf("Precision: %d\n", pf->fspec.precision);
 	printf("Length: %d\n", pf->fspec.length);
 	printf("Spec tag: %c\n", pf->fspec.spec);
-	printf("Buffer is: %s\n", pf->fspec.buffer);
+	printf("Buffer is: -%s-\n", pf->fspec.buffer);
 }
 
 static void init_pf(t_printf *pf, const char *format)
 {
-	pf->format = (char*)format;
-	pf->buffer = NULL;
+	pf->len = 0;
 	pf->fspec.left = 0;
 	pf->fspec.pad = 0;
 	pf->fspec.plus = 0;
@@ -47,30 +46,25 @@ static void init_pf(t_printf *pf, const char *format)
 int	ft_printf(const char *format,...)
 {
 	t_printf	pf;
-	int 		len;
-
+	
 	init_pf(&pf, format);
 	va_start(pf.ap, format);
 	while (*format)
 	{
 		if (*format == '%')
-			parse_fspec(pf, &format);
+			parse_fspec(&pf, &format);
 		else
-			pf->buffer =
+		{
+			ft_putchar(*format++);
+			++pf.len;
+		}
 	}
-	if (parse_fspec(&pf))
-	{
-		print_format(&pf);
-	}
-	len = 0;
 	va_end(pf.ap);
-	return (len);
+	return (pf.len);
 }
 
 int main()
 {
- 	//char *c = "helloldkj dfgd dfg4dvc%";
-	//int a = 1;
-	ft_printf("Print this int: %+05d and this char: ", 1);
+	ft_printf("this string %% %d %% okay\n", 5);
 	return (0);
 }

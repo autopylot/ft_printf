@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/13 14:55:09 by wlin              #+#    #+#              #
-#    Updated: 2017/07/29 13:17:42 by wlin             ###   ########.fr        #
+#    Updated: 2017/07/29 13:20:09 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,23 +30,6 @@ format_wchar.c \
 format_width.c \
 pdispatch.c \
 ft_printf.c
-
-# LIBFT_FILE = \
-# ft_bzero \
-# ft_memalloc \
-# ft_memchr \
-# ft_memcpy \
-# ft_memmove \
-# ft_putchar \
-# ft_putstr \
-# ft_strcat \
-# ft_strchr \
-# ft_strcpy \
-# ft_strdel \
-# ft_strdup \
-# ft_strlen \
-# ft_strnew \
-# strjoin_f
 
 SRC = \
 $(addprefix $(SRC_DIR), $(SRC_FILES)) \

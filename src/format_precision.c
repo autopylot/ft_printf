@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 14:01:56 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/22 18:04:51 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 12:18:18 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,44 +58,24 @@ static int sig_num(char *buffer)
 	return (i);
 }
 
-int	pad_zero(t_printf *pf, int pad, char c)
-{
-	char *s;
-	char *neg;
-	int i;
-
-	s = ft_strnew(pad);
-	ft_memset(s, c, pad);
-	i = ((pf->fspec.buffer[0] == '-') ? 1 : 0);
-	insert_substring(pf->fspec.buffer, s, i + 1);
-	ft_strdel(&s);
-	return (1);
-}
-
-int format_precision(t_printf *pf)
+void format_precision(t_printf *pf)
 {
 	int pad;
-	char *s;
 
-	if (pf->fspec.precision == -1)
-		return (1);
 	if (ft_strchr("diouxX", pf->fspec.spec))
 	{
 		if (pf->fspec.precision == 0 && pf->fspec.buffer[0] == '0')
 		{
 			pf->fspec.buffer[0] = '\0';
-			return (1);
+			return ;
 		}
-		else if (pf->fspec.precision <= sig_num(pf->fspec.buffer))
-			return (1);
-		pad = pf->fspec.precision - sig_num(pf->fspec.buffer);
-		return (pad_zero(pf, pad, '0'));
+		else if ((pad = pf->fspec.precision - sig_num(pf->fspec.buffer)) <= 0)
+			return ;
+		pad_zero(pf, pad, '0');
 	}
 	else if (pf->fspec.spec == 's')
 	{
-		if (pf->fspec.precision < ft_strlen(pf->fspec.buffer))
+		if (pf->fspec.precision < (int)ft_strlen(pf->fspec.buffer))
 			pf->fspec.buffer[pf->fspec.precision] = '\0';
-		return (1);
 	}
-	return (0);
 }

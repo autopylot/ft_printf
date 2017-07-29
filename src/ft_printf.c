@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/24 11:36:02 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 11:43:33 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,31 @@ void print_format(t_printf *pf)
 	printf("Buffer is: -%s-\n", pf->fspec.buffer);
 }
 
-static void init_pf(t_printf *pf, const char *format)
+void init(t_fmt_spec *fspec)
 {
-	pf->len = 0;
-	pf->fspec.left = 0;
-	pf->fspec.pad = 0;
-	pf->fspec.plus = 0;
-	pf->fspec.space = 0;
-	pf->fspec.prefix = 0;
-	pf->fspec.width = 0;
-	pf->fspec.precision = -1;
-	pf->fspec.length = 0;
-	pf->fspec.spec = ' ';
-	pf->fspec.sints = 0;
-	pf->fspec.uints = 0;
-	pf->fspec.buffer = NULL;
+	fspec->left = 0;
+	fspec->pad = 0;
+	fspec->plus = 0;
+	fspec->space = 0;
+	fspec->prefix = 0;
+	fspec->width = 0;
+	fspec->precision = -1;
+	fspec->length = 0;
+	fspec->spec = ' ';
+	fspec->sints = 0;
+	fspec->uints = 0;
+	ft_strdel(&(fspec->buffer));
 }
 
 int	ft_printf(const char *format,...)
 {
 	t_printf	pf;
-	
-	init_pf(&pf, format);
+
+	pf.len = 0;
+	init(&(pf.fspec));
 	va_start(pf.ap, format);
 	while (*format)
-	{
+	{	
 		if (*format == '%')
 			parse_fspec(&pf, &format);
 		else
@@ -61,10 +61,4 @@ int	ft_printf(const char *format,...)
 	}
 	va_end(pf.ap);
 	return (pf.len);
-}
-
-int main()
-{
-	ft_printf("this string %% %d %% okay\n", 5);
-	return (0);
 }

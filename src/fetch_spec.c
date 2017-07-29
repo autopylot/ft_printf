@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 19:25:20 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/22 14:52:55 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 12:16:20 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static intmax_t fetch_signed(t_printf *pf)
 {
 	if (pf->fspec.length == 0 && pf->fspec.spec != 'D')
 		return (va_arg(pf->ap, int));
+	else if (pf->fspec.length == 3 || pf->fspec.spec == 'D')
+		return (va_arg(pf->ap, long));
 	else if (pf->fspec.length == 1)
 		return ((char)va_arg(pf->ap, unsigned int));
 	else if (pf->fspec.length == 2)
 		return ((short)va_arg(pf->ap, unsigned int));
-	else if (pf->fspec.length == 3 || pf->fspec.spec == 'D')
-		return (va_arg(pf->ap, long));
 	else if (pf->fspec.length == 4)
 		return (va_arg(pf->ap, long long));
 	else if (pf->fspec.length == 5)
@@ -33,14 +33,16 @@ static intmax_t fetch_signed(t_printf *pf)
 
 static uintmax_t fetch_unsigned(t_printf *pf)
 {
+	if (pf->fspec.spec == 'p')
+		return ((uintmax_t)va_arg(pf->ap, void*));
 	if (pf->fspec.length == 0 && !F_UPINT(pf->fspec.spec))
 		return (va_arg(pf->ap, unsigned int));
+	else if (pf->fspec.length == 3 || F_UPINT(pf->fspec.spec))
+		return (va_arg(pf->ap, unsigned long));
 	else if (pf->fspec.length == 1)
 		return ((unsigned char)va_arg(pf->ap, unsigned int));
 	else if (pf->fspec.length == 2)
 		return ((unsigned short)va_arg(pf->ap, unsigned int));
-	else if (pf->fspec.length == 3 || F_UPINT(pf->fspec.spec))
-		return (va_arg(pf->ap, unsigned long));
 	else if (pf->fspec.length == 4)
 		return (va_arg(pf->ap, unsigned long long));
 	else if (pf->fspec.length == 5)
@@ -76,6 +78,20 @@ static char *fetch_char(t_printf *pf)
 	}
 	return (NULL);
 }
+
+// static void	print_pointer_address(t_printf *p)
+// {
+// 	void	*pointer;
+//
+// 	pointer = va_arg(p->ap, void *);
+// 	p->f &= ~F_SHARP;
+// 	p->min_length -= (p->f & F_ZERO ? 2 : 0);
+// 	p->padding = (p->printed > p->min_length - 3) ? 0 :
+// 		p->min_length - 3 - p->printed;
+// 	p->f |= F_SHARP;
+// 	p->f |= F_POINTER;
+// 	itoa_base_printf((uintmax_t)pointer, 16, p);
+// }
 
 int fetch_spec(t_printf *pf)
 {

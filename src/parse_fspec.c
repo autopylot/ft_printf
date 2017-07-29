@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 11:41:47 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/24 11:41:35 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 11:43:27 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,13 @@ static	int parse_spec(t_fmt_spec *fspec, char type)
 	return (0);
 }
 
-void clr_fspec(t_fmt_spec *fspec)
-{
-	fspec->left = 0;
-	fspec->pad = 0;
-	fspec->plus = 0;
-	fspec->space = 0;
-	fspec->prefix = 0;
-	fspec->width = 0;
-	fspec->precision = -1;
-	fspec->length = 0;
-	fspec->spec = ' ';
-	fspec->sints = 0;
-	fspec->uints = 0;
-	ft_strdel(&(fspec->buffer));
-}
-
-int	parse_fspec(t_printf *pf, const char **fmt)
+void	parse_fspec(t_printf *pf, const char **fmt)
 {
 	if (*(*fmt)++ == '%' && *(*fmt) == '%')
 	{
 		ft_putchar(*(*fmt)++);
 		++pf->len;
-		return (1);
+		return ;
 	}
 	while (parse_flag(&(pf->fspec), *(*fmt)))
 		++(*fmt);
@@ -99,8 +83,8 @@ int	parse_fspec(t_printf *pf, const char **fmt)
 	if (parse_spec(&(pf->fspec), *(*fmt)))
 	{
 		++(*fmt);
-		// if (pdispatch(pf))
-		// 	clr_fspec(&(pf->fspec));
+		if (pdispatch(pf))
+			init(&(pf->fspec));
 	}
-	return (0);
+	//return (0);
 }

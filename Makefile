@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/13 14:55:09 by wlin              #+#    #+#              #
-#    Updated: 2017/07/29 12:15:37 by wlin             ###   ########.fr        #
+#    Updated: 2017/07/29 13:03:13 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,6 @@ ft_printf.c
 # ft_strnew \
 # strjoin_f
 
-
-
 SRC = \
 $(addprefix $(SRC_DIR), $(SRC_FILES)) \
 #$(addprefix $(LIB_DIR), $(addsuffix .c, $(LIBFT_FILE)))
@@ -60,7 +58,7 @@ $(addprefix $(BUILD_DIR), $(SRC_FILES:.c=.o)) \
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(BUILD_DIR)
 	@make -C $(LIB_DIR)
 	@cp libft/libft.a ./$(NAME)
 	@ar -rc $(NAME) $(OBJ)

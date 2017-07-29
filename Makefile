@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/13 14:55:09 by wlin              #+#    #+#              #
-#    Updated: 2017/07/29 13:03:13 by wlin             ###   ########.fr        #
+#    Updated: 2017/07/29 13:08:07 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ $(NAME): $(OBJ) $(BUILD_DIR)
 	@cp libft/libft.a ./$(NAME)
 	@ar -rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo "\033[32mBinary \033[1;32m$(NAME)\033[1;0m\033[32m created.\033[0m"
+	#@echo "\033[32mBinary \033[1;32m$(NAME)\033[1;0m\033[32m created.\033[0m"
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $<
@@ -82,11 +82,12 @@ norme:
 	norminette ./$(SRC_DIR)/
 
 clean:
-	@rm -rf $(BUILD_DIR);
-	@cd libft && $(MAKE) fclean
+	@rm -rf $(BUILD_DIR)
+	@make clean -C $(LIBFT)
 
 fclean: clean
 	@rm -f $(NAME)
+	@make fclean -C $(LIBFT)
 
 re: fclean all
 

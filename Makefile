@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/13 14:55:09 by wlin              #+#    #+#              #
-#    Updated: 2017/07/29 13:08:07 by wlin             ###   ########.fr        #
+#    Updated: 2017/07/29 13:17:42 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,21 +58,22 @@ $(addprefix $(BUILD_DIR), $(SRC_FILES:.c=.o)) \
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(BUILD_DIR)
+$(NAME): $(OBJ)
 	@make -C $(LIB_DIR)
 	@cp libft/libft.a ./$(NAME)
 	@ar -rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	#@echo "\033[32mBinary \033[1;32m$(NAME)\033[1;0m\033[32m created.\033[0m"
+	@echo "\033[32mBinary \033[1;32m$(NAME)\033[1;0m\033[32m created.\033[0m"
 
-$(BUILD_DIR)%.o: $(SRC_DIR)%.c $(BUILD_DIR)
+$(BUILD_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $<
 
 # $(OBJ): $(SRC) $(BUILD_DIR)
 # 	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $<
 
-$(BUILD_DIR):
-	@mkdir $(BUILD_DIR)
+# $(BUILD_DIR):
+# 	@mkdir $(BUILD_DIR)
 
 norme:
 	norminette ./libft/
@@ -83,11 +84,10 @@ norme:
 
 clean:
 	@rm -rf $(BUILD_DIR)
-	@make clean -C $(LIBFT)
+
 
 fclean: clean
 	@rm -f $(NAME)
-	@make fclean -C $(LIBFT)
 
 re: fclean all
 

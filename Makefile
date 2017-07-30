@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/13 14:55:09 by wlin              #+#    #+#              #
-#    Updated: 2017/07/29 13:20:09 by wlin             ###   ########.fr        #
+#    Updated: 2017/07/29 13:58:26 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,11 @@ $(BUILD_DIR)%.o: $(SRC_DIR)%.c
 # $(BUILD_DIR):
 # 	@mkdir $(BUILD_DIR)
 
+test: re
+	@$(CC) $(CFLAGS) -I $(INC_DIR) test.c -L. -lftprintf
+	@./a.out
+	@rm ./a.out
+
 norme:
 	norminette ./libft/
 	@echo
@@ -66,11 +71,12 @@ norme:
 	norminette ./$(SRC_DIR)/
 
 clean:
+	@rm -f $(OBJ)
 	@rm -rf $(BUILD_DIR)
-
+	@make clean -C libft/
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) libft/libft.a
 
 re: fclean all
 

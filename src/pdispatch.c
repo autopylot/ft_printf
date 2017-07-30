@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/26 11:32:30 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 13:46:23 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int pdispatch(t_printf *pf)
 {
 	fetch_spec(pf);
-	if (pf->fspec.precision)
+	if (pf->fspec.precision > -1)
 		format_precision(pf);
 	if (pf->fspec.width)
 		format_width(pf);

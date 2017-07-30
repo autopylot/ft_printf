@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 11:43:33 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 14:12:28 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void init(t_fmt_spec *fspec)
 	fspec->spec = ' ';
 	fspec->sints = 0;
 	fspec->uints = 0;
-	ft_strdel(&(fspec->buffer));
+	fspec->buffer = NULL;
 }
 
 int	ft_printf(const char *format,...)
@@ -50,7 +50,7 @@ int	ft_printf(const char *format,...)
 	init(&(pf.fspec));
 	va_start(pf.ap, format);
 	while (*format)
-	{	
+	{
 		if (*format == '%')
 			parse_fspec(&pf, &format);
 		else

@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 14:01:56 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 12:18:18 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 14:31:49 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int sig_num(char *buffer)
 	i = 0;
 	while (!(*buffer >= '1' && *buffer <= '9') && *buffer)
 		++buffer;
-	while ((*buffer >= '1' && *buffer <= '9') && *buffer)
+	while ((*buffer >= '0' && *buffer <= '9') && *buffer)
 	{
 		++buffer;
 		++i;
@@ -71,6 +71,7 @@ void format_precision(t_printf *pf)
 		}
 		else if ((pad = pf->fspec.precision - sig_num(pf->fspec.buffer)) <= 0)
 			return ;
+		printf("padding: %d\n", pad);
 		pad_zero(pf, pad, '0');
 	}
 	else if (pf->fspec.spec == 's')

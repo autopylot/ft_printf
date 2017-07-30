@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 11:13:23 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/22 17:36:22 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 14:37:52 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char *sitoa_base(t_printf *pf, int base)
 	intmax_t tmp;
 	intmax_t nbr;
 
-	tmp = ABS(pf->fspec.sints);
+	tmp = pf->fspec.sints;
 	nbr = tmp;
 	len = (pf->fspec.sints < 0 && base == 10 ? 2 : 1);
 	while (nbr && ++len)
@@ -28,6 +28,7 @@ char *sitoa_base(t_printf *pf, int base)
 		return (NULL);
 	s[--len] = '\0';
 	s[0] = (tmp < 0 ? '-' : '0');
+	tmp = ABS(tmp);
 	while (tmp)
 	{
 		s[--len] = (tmp % base > 9 ? tmp % base - 10 + 'a' : tmp % base + '0');
@@ -50,9 +51,10 @@ char *uitoa_base(t_printf *pf, int base)
 	len = 1;
 	while (nbr && ++len)
 		nbr /= base;
-	if (!(s = (char*)malloc(sizeof(char) * len)))
+	if (!(s = (char*)malloc(sizeof(char) * len + 1)))
 		return (NULL);
-	s[--len] = '\0';
+	s[len--] = '\0';
+	s[0] = '0';
 	while (tmp)
 	{
 		s[--len] = (tmp % base > 9 ? tmp % base - 10 + c : tmp % base + '0');

@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 13:46:23 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 21:21:40 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 */
 int pdispatch(t_printf *pf)
 {
+	int i;
+
+	i = 0;
 	fetch_spec(pf);
 	if (pf->fspec.precision > -1)
 		format_precision(pf);
@@ -30,7 +33,12 @@ int pdispatch(t_printf *pf)
 		format_plus(pf);
 	if (pf->fspec.left)
 		format_left(pf);
-	ft_putstr(pf->fspec.buffer);
-	pf->len += ft_strlen(pf->fspec.buffer);
+	while (pf->fspec.buffer[i])
+	{
+			ft_putchar(pf->fspec.buffer[i++]);
+			++pf->len;
+	}
+	// ft_putstr(pf->fspec.buffer);
+	// pf->len += ft_strlen(pf->fspec.buffer);
 	return (1);
 }

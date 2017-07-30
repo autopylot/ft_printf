@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 19:25:20 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 14:09:05 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 21:18:39 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ static char *fetch_char(t_printf *pf)
 			s[0] = va_arg(pf->ap, int);
 			return (s);
 		}
-		else if (pf->fspec.spec == 's')
+		else if (pf->fspec.spec == 's' || pf->fspec.spec == 'S')
 			return (ft_strdup((va_arg(pf->ap, char*))));
-		else if (pf->fspec.spec == 'S')
-			return (set_wstr(va_arg(pf->ap, wchar_t*)));
+		// else if (pf->fspec.spec == 'S')
+		// 	return (set_wstr(va_arg(pf->ap, wchar_t*)));
 	}
 	else if (pf->fspec.length == 3 )
 	{
@@ -79,29 +79,14 @@ static char *fetch_char(t_printf *pf)
 	return (NULL);
 }
 
-// static void	print_pointer_address(t_printf *p)
-// {
-// 	void	*pointer;
-//
-// 	pointer = va_arg(p->ap, void *);
-// 	p->f &= ~F_SHARP;
-// 	p->min_length -= (p->f & F_ZERO ? 2 : 0);
-// 	p->padding = (p->printed > p->min_length - 3) ? 0 :
-// 		p->min_length - 3 - p->printed;
-// 	p->f |= F_SHARP;
-// 	p->f |= F_POINTER;
-// 	itoa_base_printf((uintmax_t)pointer, 16, p);
-// }
-
-int fetch_spec(t_printf *pf)
+void fetch_spec(t_printf *pf)
 {
-	if (pf->fspec.spec == 'p' && pf->fspec.length != 0)
-		return (0);
+	// if (pf->fspec.spec == 'p' && pf->fspec.length != 0)
+	// 	return (0);
 	if (F_SINT(pf->fspec.spec))
 	{
 		pf->fspec.sints = fetch_signed(pf);
 		pf->fspec.buffer = sitoa_base(pf, 10);
-		return (1);
 	}
 	else if (F_UINT(pf->fspec.spec))
 	{
@@ -112,9 +97,7 @@ int fetch_spec(t_printf *pf)
 			pf->fspec.buffer = uitoa_base(pf, 8);
 		else if (pf->fspec.spec == 'u' || pf->fspec.spec == 'U')
 			pf->fspec.buffer = uitoa_base(pf, 10);
-		return (1);
 	}
 	else if (F_CHR(pf->fspec.spec))
-		return ((pf->fspec.buffer = fetch_char(pf)) != NULL ? 1 : 0);
-	return (0);
+		pf->fspec.buffer = fetch_char(pf);
 }

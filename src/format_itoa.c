@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 11:13:23 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 14:37:52 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 21:06:37 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,29 @@
 
 char *sitoa_base(t_printf *pf, int base)
 {
-	char *s;
-	int len;
-	intmax_t tmp;
-	intmax_t nbr;
+	char		*s;
+	int			len;
+	intmax_t	tmp;
+	intmax_t	nbr;
 
-	tmp = pf->fspec.sints;
-	nbr = tmp;
-	len = (pf->fspec.sints < 0 && base == 10 ? 2 : 1);
-	while (nbr && ++len)
-		nbr /= base;
-	if (!(s = (char*)malloc(sizeof(char) * len)))
+	if (base < 2 || base > 16)
 		return (NULL);
-	s[--len] = '\0';
-	s[0] = (tmp < 0 ? '-' : '0');
-	tmp = ABS(tmp);
+	tmp = ABS(pf->fspec.sints);
+	nbr = tmp;
+	if (tmp == 0)
+		return (ft_strdup("0"));
+	len = (pf->fspec.sints < 0 && base == 10 ? 2 : 1);
+	while (nbr /= base)
+		++len;
+	if (!(s = ft_strnew(len)))
+		return (NULL);
 	while (tmp)
 	{
 		s[--len] = (tmp % base > 9 ? tmp % base - 10 + 'a' : tmp % base + '0');
 		tmp /= base;
 	}
+	if (pf->fspec.sints < 0)
+		s[--len] = '-';
 	return (s);
 }
 
@@ -41,20 +44,22 @@ char *uitoa_base(t_printf *pf, int base)
 {
 	int len;
 	char *s;
+	char c;
 	uintmax_t nbr;
 	uintmax_t tmp;
-	char c;
 
+	len = 1;
+	if (base < 2 || base > 16)
+		return (NULL);
 	c = (pf->fspec.spec == 'X' ? 'A' : 'a');
 	tmp = pf->fspec.uints;
 	nbr = tmp;
-	len = 1;
-	while (nbr && ++len)
-		nbr /= base;
-	if (!(s = (char*)malloc(sizeof(char) * len + 1)))
+	if (tmp == 0)
+		return (ft_strdup("0"));
+	while (nbr /= base)
+		++len;
+	if (!(s = ft_strnew(len)))
 		return (NULL);
-	s[len--] = '\0';
-	s[0] = '0';
 	while (tmp)
 	{
 		s[--len] = (tmp % base > 9 ? tmp % base - 10 + c : tmp % base + '0');

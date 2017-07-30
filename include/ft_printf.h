@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 20:19:24 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 12:17:16 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 21:09:02 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int		ft_printf(const char *format,...);
 void 	init(t_fmt_spec *fspec);
 void	parse_fspec(t_printf *pf, const char **fmt);
 int 	pdispatch(t_printf *pf);
-int 	fetch_spec(t_printf *pf);
+
+void 	fetch_spec(t_printf *pf);
 void 	format_precision(t_printf *pf);
 void 	format_prefix(t_printf *pf);
 void 	format_width(t_printf *pf);

@@ -6,11 +6,17 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 21:21:40 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 11:02:46 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void format_address(t_printf *pf)
+{
+	pf->fspec.buffer = strjoin_f("0x", pf->fspec.buffer, 'R');
+}
+
 
 /*
 	Prints tag struct and dispatch matching functions
@@ -25,7 +31,9 @@ int pdispatch(t_printf *pf)
 		format_precision(pf);
 	if (pf->fspec.width)
 		format_width(pf);
-	if (pf->fspec.prefix || pf->fspec.spec == 'p')
+	if (pf->fspec.spec == 'p')
+		format_address(pf);
+	if (pf->fspec.prefix)
 		format_prefix(pf);
 	if (pf->fspec.space)
 		format_space(pf);

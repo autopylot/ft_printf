@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 21:13:25 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 10:53:07 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 11:02:04 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void format_prefix(t_printf *pf)
 		else
 			pf->fspec.buffer = strjoin_f("0", pf->fspec.buffer, 'R');
 	}
-	else if ((ft_strchr("xX", pf->fspec.spec) && pf->fspec.uints != 0) || pf->fspec.spec == 'p')
+	else if ((ft_strchr("xX", pf->fspec.spec) && pf->fspec.uints != 0))
 	{
 		while (WS(pf->fspec.buffer[i]))
 			++i;

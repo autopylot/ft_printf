@@ -6,25 +6,22 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 21:31:58 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 11:24:16 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void print_format(t_printf *pf)
+static int	ft_error(char const *s, int fd)
 {
-	printf("Left: %d\n", pf->fspec.left);
-	printf("Prefix: %d\n", pf->fspec.prefix);
-	printf("Plus: %d\n", pf->fspec.plus);
-	printf("Pad zero: %d\n", pf->fspec.pad);
-	printf("Space: %d\n", pf->fspec.space);
-	printf("Width: %d\n", pf->fspec.width);
-	printf("Precision: %d\n", pf->fspec.precision);
-	printf("Length: %d\n", pf->fspec.length);
-	printf("Spec tag: %c\n", pf->fspec.spec);
-	printf("Buffer is: -%s-\n", pf->fspec.buffer);
+	if (s)
+	{
+		while (*s)
+			write(fd, s++, 1);
+	}
+	return (0);
 }
+
 
 void init(t_fmt_spec *fspec)
 {
@@ -46,15 +43,16 @@ int	ft_printf(const char *format,...)
 {
 	t_printf	pf;
 
-	if (!*format)
-		return (0);
 	pf.len = 0;
 	init(&(pf.fspec));
 	va_start(pf.ap, format);
 	while (*format)
 	{
 		if (*format == '%')
-			parse_fspec(&pf, &format);
+		{
+			if (!parse_fspec(&pf, &format))
+				return (ft_error("Error\n", 2));
+		}
 		else
 		{
 			ft_putchar(*format++);

@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 11:02:46 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 12:02:17 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,18 @@ static void format_address(t_printf *pf)
 	pf->fspec.buffer = strjoin_f("0x", pf->fspec.buffer, 'R');
 }
 
-
-/*
-	Prints tag struct and dispatch matching functions
-*/
-int pdispatch(t_printf *pf)
+void pdispatch(t_printf *pf)
 {
 	int i;
 
 	i = 0;
 	fetch_spec(pf);
+	if (pf->fspec.spec == 'p')
+		format_address(pf);
 	if (pf->fspec.precision > -1)
 		format_precision(pf);
 	if (pf->fspec.width)
 		format_width(pf);
-	if (pf->fspec.spec == 'p')
-		format_address(pf);
 	if (pf->fspec.prefix)
 		format_prefix(pf);
 	if (pf->fspec.space)
@@ -48,5 +44,5 @@ int pdispatch(t_printf *pf)
 	}
 	// ft_putstr(pf->fspec.buffer);
 	// pf->len += ft_strlen(pf->fspec.buffer);
-	return (1);
+	//return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 19:25:20 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 10:34:35 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 11:46:48 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ static char *fetch_char(t_printf *pf)
 
 void fetch_spec(t_printf *pf)
 {
-	// if (pf->fspec.spec == 'p' && pf->fspec.length != 0)
-	// 	return (0);
 	if (F_SINT(pf->fspec.spec))
 	{
 		pf->fspec.sints = fetch_signed(pf);
@@ -91,7 +89,7 @@ void fetch_spec(t_printf *pf)
 	else if (F_UINT(pf->fspec.spec))
 	{
 		pf->fspec.uints = fetch_unsigned(pf);
-		if (pf->fspec.spec == 'x' || pf->fspec.spec == 'X' || pf->fspec.spec == 'p')
+		if (ft_strchr("xXp", pf->fspec.spec))
 			pf->fspec.buffer = uitoa_base(pf, 16);
 		else if (pf->fspec.spec == 'o' || pf->fspec.spec == 'O')
 			pf->fspec.buffer = uitoa_base(pf, 8);

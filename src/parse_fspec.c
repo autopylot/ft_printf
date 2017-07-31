@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 11:41:47 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 20:21:09 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 11:40:39 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static	int parse_flag(t_fmt_spec *fspec, char flag)
 {
-	if (flag == '-' && !fspec->left)
+	if (flag == '-')
 		return (fspec->left = 1);
-	else if (flag == '#' && !fspec->prefix)
+	else if (flag == '#')
 		return (fspec->prefix = 1);
-	else if (flag == '0' && !fspec->pad)
+	else if (flag == '0')
 		return (fspec->pad = 1);
-	else if (flag == ' ' && !fspec->space)
+	else if (flag == ' ')
 		return (fspec->space = 1);
-	else if (flag == '+' && !fspec->plus)
+	else if (flag == '+')
 		return (fspec->plus = 1);
 	return (0);
 }
@@ -66,28 +66,38 @@ static	int parse_spec(t_fmt_spec *fspec, char type)
 	return (0);
 }
 
-void	parse_fspec(t_printf *pf, const char **fmt)
+int	parse_fspec(t_printf *pf, const char **fmt)
 {
-	if (*(*fmt)++ == '%' && *(*fmt) == '%')
-	{
-		ft_putchar(*(*fmt)++);
-		++pf->len;
-		return ;
-	}
+	// if (*(*fmt)++ == '%' && *(*fmt) == '%')
+	// {
+	// 	ft_putchar(*(*fmt)++);
+	// 	++pf->len;
+	// 	return (1) ;
+	// }
+	if (*(*fmt) == '%')
+		++(*fmt);
 	while (parse_flag(&(pf->fspec), *(*fmt)))
 		++(*fmt);
 	while ((parse_number(&(pf->fspec), *(*fmt))) > -1)
 		++(*fmt);
 	while (parse_length(&(pf->fspec), *(*fmt)))
 		++(*fmt);
-	if (parse_spec(&(pf->fspec), *(*fmt)))
-	{
-		++(*fmt);
-		if (pdispatch(pf))
-		{
-			ft_strdel(&(pf->fspec.buffer));
-			init(&(pf->fspec));
-		}
-	}
-	//return (0);
+	if (!parse_spec(&(pf->fspec), *(*fmt)++))
+		return (0);
+	pdispatch(pf);
+	ft_strdel(&(pf->fspec.buffer));
+	init(&(pf->fspec));
+	return (1);
+
+
+	// 	++(*fmt);
+	// 	if (pdispatch(pf))
+	// 	{
+	// 		ft_strdel(&(pf->fspec.buffer));
+	// 		init(&(pf->fspec));
+	// 	}
+	// 	return (1);
+	// }
+	// else
+	// 	return (0);
 }

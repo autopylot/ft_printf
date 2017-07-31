@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 20:45:50 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 12:19:22 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 11:59:51 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void format_width(t_printf *pf)
 		c = ' ';
 		if (pf->fspec.precision == -1 && !pf->fspec.left && pf->fspec.pad)
 		{
-			if (F_SINT(pf->fspec.spec) || F_UINT(pf->fspec.spec))
+			if (ft_strchr("dDiuoxXUO", pf->fspec.spec))
 				c = '0';
 		}
 		pad_zero(pf, pad, c);

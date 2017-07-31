@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 14:01:56 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 14:31:49 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 11:50:30 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@ void insert_substring(char *a, char *b, int position)
   free(e);
 }
 
-static int sig_num(char *buffer)
-{
-	int i;
-
-	i = 0;
-	while (!(*buffer >= '1' && *buffer <= '9') && *buffer)
-		++buffer;
-	while ((*buffer >= '0' && *buffer <= '9') && *buffer)
-	{
-		++buffer;
-		++i;
-	}
-	return (i);
-}
+// static int sig_num(char *buffer)
+// {
+// 	int i;
+//
+// 	i = 0;
+// 	while (!(*buffer >= '1' && *buffer <= '9') && *buffer)
+// 		++buffer;
+// 	while ((*buffer >= '0' && *buffer <= '9') && *buffer)
+// 	{
+// 		++buffer;
+// 		++i;
+// 	}
+// 	return (i);
+// }
 
 void format_precision(t_printf *pf)
 {
@@ -69,9 +69,8 @@ void format_precision(t_printf *pf)
 			pf->fspec.buffer[0] = '\0';
 			return ;
 		}
-		else if ((pad = pf->fspec.precision - sig_num(pf->fspec.buffer)) <= 0)
+		else if ((pad = pf->fspec.precision - (int)ft_strlen(pf->fspec.buffer)) < 1)
 			return ;
-		printf("padding: %d\n", pad);
 		pad_zero(pf, pad, '0');
 	}
 	else if (pf->fspec.spec == 's')

@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 20:19:24 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 21:09:02 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 11:37:17 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #define F_NUM(x)	((x >= '0' && x <= '9') || x == '.')
 #define F_LEN(x) 	(x == 'h' || x == 'l' || x == 'j' || x == 'z')
 
-#define F_SPEC(x)	(F_CHR(x) || F_SINT(x) || F_UINT(x))
+#define F_SPEC(x)	(F_CHR(x) || F_SINT(x) || F_UINT(x) || x == '%')
 #define F_CHR(x)	(x == 's' || x == 'S' || x == 'c' || x == 'C')
 #define F_SINT(x)	(x == 'd' || x == 'D' || x == 'i')
 #define F_UINT(x)	(x == 'u' || x == 'o' || x == 'x' || x == 'p' || F_UPINT(x))
@@ -69,8 +69,8 @@ typedef struct	s_printf
 
 int		ft_printf(const char *format,...);
 void 	init(t_fmt_spec *fspec);
-void	parse_fspec(t_printf *pf, const char **fmt);
-int 	pdispatch(t_printf *pf);
+int		parse_fspec(t_printf *pf, const char **fmt);
+void 	pdispatch(t_printf *pf);
 
 void 	fetch_spec(t_printf *pf);
 void 	format_precision(t_printf *pf);
@@ -82,7 +82,6 @@ void 	format_left(t_printf *pf);
 void 	pad_zero(t_printf *pf, int pad, char c);
 char 	*set_wide(wchar_t c);
 char 	*set_wstr(wchar_t *wstr);
-void 	print_format(t_printf *pf);
 void 	insert_substring(char *a, char *b, int position);
 char 	*substring(char *string, int position, int length);
 char 	*uitoa_base(t_printf *pf, int base);

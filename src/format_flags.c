@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 21:13:25 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 12:17:35 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 10:53:07 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void format_prefix(t_printf *pf)
 	{
 		while (WS(pf->fspec.buffer[i]))
 			++i;
-		if (pf->fspec.precision == -1 && pf->fspec.buffer[i + 1] == '0')
+		if (pf->fspec.precision == -1 && pf->fspec.buffer[i] == '0')
 			ft_memcpy(pf->fspec.buffer + i, PREFIX(pf->fspec.spec), 2);
 		else if (i >= 2)
 			ft_memcpy(pf->fspec.buffer + i - 2, PREFIX(pf->fspec.spec), 2);
@@ -104,7 +104,10 @@ void pad_zero(t_printf *pf, int pad, char c)
 
 	s = ft_strnew(pad);
 	ft_memset(s, c, pad);
-	i = ((pf->fspec.buffer[0] == '-') ? 1 : 0);
+	if (c == ' ')
+		i = 0;
+	else
+		i = ((pf->fspec.buffer[0] == '-') ? 1 : 0);
 	insert_substring(pf->fspec.buffer, s, i + 1);
 	ft_strdel(&s);
 }

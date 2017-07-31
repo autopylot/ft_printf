@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 19:25:20 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 21:18:39 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 10:34:35 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,8 @@ void fetch_spec(t_printf *pf)
 			pf->fspec.buffer = uitoa_base(pf, 10);
 	}
 	else if (F_CHR(pf->fspec.spec))
-		pf->fspec.buffer = fetch_char(pf);
+	{
+		if ((pf->fspec.buffer = fetch_char(pf)) == NULL)
+			pf->fspec.buffer = ft_strdup("(null)");
+	}
 }

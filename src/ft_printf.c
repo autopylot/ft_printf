@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 21:31:05 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/29 21:31:58 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_printf(const char *format,...)
 {
 	t_printf	pf;
 
-	if (!format)
+	if (!*format)
 		return (0);
 	pf.len = 0;
 	init(&(pf.fspec));

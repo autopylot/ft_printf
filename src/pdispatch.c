@@ -6,16 +6,11 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 12:02:17 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 12:18:39 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static void format_address(t_printf *pf)
-{
-	pf->fspec.buffer = strjoin_f("0x", pf->fspec.buffer, 'R');
-}
 
 void pdispatch(t_printf *pf)
 {
@@ -24,7 +19,7 @@ void pdispatch(t_printf *pf)
 	i = 0;
 	fetch_spec(pf);
 	if (pf->fspec.spec == 'p')
-		format_address(pf);
+		pf->fspec.buffer = strjoin_f("0x", pf->fspec.buffer, 'R');
 	if (pf->fspec.precision > -1)
 		format_precision(pf);
 	if (pf->fspec.width)

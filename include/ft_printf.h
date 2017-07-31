@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 20:19:24 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 11:37:17 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 12:18:40 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #define F_NUM(x)	((x >= '0' && x <= '9') || x == '.')
 #define F_LEN(x) 	(x == 'h' || x == 'l' || x == 'j' || x == 'z')
 
-#define F_SPEC(x)	(F_CHR(x) || F_SINT(x) || F_UINT(x) || x == '%')
+#define F_SPEC(x)	(F_CHR(x) || F_SINT(x) || F_UINT(x))
 #define F_CHR(x)	(x == 's' || x == 'S' || x == 'c' || x == 'C')
 #define F_SINT(x)	(x == 'd' || x == 'D' || x == 'i')
 #define F_UINT(x)	(x == 'u' || x == 'o' || x == 'x' || x == 'p' || F_UPINT(x))

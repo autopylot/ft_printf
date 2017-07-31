@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 11:41:47 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 11:40:39 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 12:17:05 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ static	int parse_spec(t_fmt_spec *fspec, char type)
 
 int	parse_fspec(t_printf *pf, const char **fmt)
 {
-	// if (*(*fmt)++ == '%' && *(*fmt) == '%')
-	// {
-	// 	ft_putchar(*(*fmt)++);
-	// 	++pf->len;
-	// 	return (1) ;
-	// }
 	if (*(*fmt) == '%')
 		++(*fmt);
+	if(*(*fmt) == '%')
+	{
+		ft_putchar(*(*fmt)++);
+		++pf->len;
+		return (1);
+	}
 	while (parse_flag(&(pf->fspec), *(*fmt)))
 		++(*fmt);
 	while ((parse_number(&(pf->fspec), *(*fmt))) > -1)
@@ -88,8 +88,6 @@ int	parse_fspec(t_printf *pf, const char **fmt)
 	ft_strdel(&(pf->fspec.buffer));
 	init(&(pf->fspec));
 	return (1);
-
-
 	// 	++(*fmt);
 	// 	if (pdispatch(pf))
 	// 	{

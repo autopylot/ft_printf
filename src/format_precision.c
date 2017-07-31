@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 14:01:56 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 11:50:30 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 12:19:44 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void format_precision(t_printf *pf)
 {
 	int pad;
 
-	if (ft_strchr("diouxX", pf->fspec.spec))
+	if (ft_strchr("dDioOuUxX", pf->fspec.spec))
 	{
 		if (pf->fspec.precision == 0 && pf->fspec.buffer[0] == '0')
 		{

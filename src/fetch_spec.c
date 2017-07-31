@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 19:25:20 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 12:15:03 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 13:28:56 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,14 @@ static char *fetch_char(t_printf *pf)
 {
 	char *s;
 
-	if (pf->fspec.spec == 'c' || pf->fspec.spec == 'C')
+	if (pf->fspec.length == 3 )
+	{
+		if (pf->fspec.spec == 'c')
+			return (set_wide(va_arg(pf->ap, wchar_t)));
+		else if (pf->fspec.spec == 's')
+			return (set_wstr(va_arg(pf->ap, wchar_t*)));
+	}
+	else if (pf->fspec.spec == 'c' || pf->fspec.spec == 'C')
 	{
 		s = ft_strnew(1);
 		s[0] = va_arg(pf->ap, int);
@@ -64,13 +71,6 @@ static char *fetch_char(t_printf *pf)
 	}
 	else if (pf->fspec.spec == 's' || pf->fspec.spec == 'S')
 		return (ft_strdup((va_arg(pf->ap, char*))));
-	else if (pf->fspec.length == 3 )
-	{
-		if (pf->fspec.spec == 'c')
-			return (set_wide(va_arg(pf->ap, wchar_t)));
-		else if (pf->fspec.spec == 's')
-			return (set_wstr(va_arg(pf->ap, wchar_t*)));
-	}
 	return (NULL);
 }
 

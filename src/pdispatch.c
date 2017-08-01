@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 20:14:22 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 12:11:33 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	pdispatch(t_printf *pf)
 	i = -1;
 	fetch_spec(pf);
 	if (pf->fspec.spec == 'p')
-		pf->fspec.buffer = strjoin_f("0x", pf->fspec.buffer, 'R');
+		pf->fspec.buffer = strjoin_f("0x", pf->fspec.buffer, 'N');
 	if (pf->fspec.precision > -1)
 		format_precision(pf);
 	if (pf->fspec.width)

@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 11:41:47 by wlin              #+#    #+#             */
-/*   Updated: 2017/08/01 12:06:22 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 12:10:01 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int				parse_fspec(t_printf *pf, const char **fmt)
 	if (!parse_spec(&(pf->fspec), *(*fmt)++))
 		return (0);
 	pdispatch(pf);
-	ft_strdel(&(pf->fspec.buffer));
+	//ft_strdel(&(pf->fspec.buffer));
 	init(&(pf->fspec));
 	return (1);
 }

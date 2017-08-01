@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 19:25:20 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 18:49:33 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 11:00:09 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static	uintmax_t	fetch_unsigned(t_printf *pf)
 {
 	if (pf->fspec.spec == 'p')
 		return ((uintmax_t)va_arg(pf->ap, void*));
-	if (pf->fspec.length == 0 && !F_UPINT(pf->fspec.spec))
-		return (va_arg(pf->ap, unsigned int));
-	else if (pf->fspec.length == 3 || F_UPINT(pf->fspec.spec))
+	else if (pf->fspec.length == 3 || ft_strchr("UO", pf->fspec.spec))
 		return (va_arg(pf->ap, unsigned long));
+	else if (pf->fspec.length == 0)
+		return (va_arg(pf->ap, unsigned int));
 	else if (pf->fspec.length == 1)
 		return ((unsigned char)va_arg(pf->ap, unsigned int));
 	else if (pf->fspec.length == 2)
@@ -67,6 +67,8 @@ static	char		*fetch_char(t_printf *pf)
 	{
 		s = ft_strnew(1);
 		s[0] = va_arg(pf->ap, int);
+		if (s[0] == 0)
+			++pf->len;
 		return (s);
 	}
 	else if (pf->fspec.spec == 's' || pf->fspec.spec == 'S')
@@ -88,7 +90,7 @@ void				fetch_spec(t_printf *pf)
 			pf->fspec.buffer = uitoa_base(pf, 16);
 		else if (pf->fspec.spec == 'o' || pf->fspec.spec == 'O')
 			pf->fspec.buffer = uitoa_base(pf, 8);
-		else if (pf->fspec.spec == 'u' || pf->fspec.spec == 'U')
+		else
 			pf->fspec.buffer = uitoa_base(pf, 10);
 	}
 	else if (F_CHR(pf->fspec.spec))

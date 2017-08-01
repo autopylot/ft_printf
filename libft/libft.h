@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 09:05:36 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 19:59:23 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 10:35:19 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ char			*strjoin_f(char *s1, char *s2, char c);
 int				ft_isalnum(int c);
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);
+
 #endif

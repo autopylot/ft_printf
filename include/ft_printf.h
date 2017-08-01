@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 20:19:24 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 19:58:43 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 11:20:09 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,19 @@
 # include <wchar.h>
 
 # define F_FLAG(x)	(x == '-' || x == '#' || x == ' ' || x == '0' || x == '+')
+
 # define F_NUM(x)	((x >= '0' && x <= '9') || x == '.')
+
 # define F_LEN(x) 	(x == 'h' || x == 'l' || x == 'j' || x == 'z')
+
 # define F_SPEC(x)	(F_CHR(x) || F_SINT(x) || F_UINT(x))
+
 # define F_CHR(x)	(x == 's' || x == 'S' || x == 'c' || x == 'C')
 # define F_SINT(x)	(x == 'd' || x == 'D' || x == 'i')
-# define F_UINT(x)	(x == 'u' || x == 'o' || x == 'x' || x == 'p' || x == 'X'|| F_UPINT(x))
-# define F_UPINT(x)	(x == 'U' || x == 'O')
+
+# define F_UINT(x)	(x == 'u' || x == 'o' || x == 'x' || x == 'p' || F_UPINT(x))
+# define F_UPINT(x)	(x == 'U' || x == 'O' || x == 'X')
+
 # define PREFIX(x) 	(x == 'X' ? "0X" : "0x")
 
 /*
@@ -79,8 +85,6 @@ void	format_left(t_printf *pf);
 void	pad_zero(t_printf *pf, int pad, char c);
 char	*set_wide(wchar_t c);
 char	*set_wstr(wchar_t *wstr);
-void	insert_substring(char *a, char *b, int position);
-char	*substring(char *string, int position, int length);
 char	*uitoa_base(t_printf *pf, int base);
 char	*sitoa_base(t_printf *pf, int base);
 

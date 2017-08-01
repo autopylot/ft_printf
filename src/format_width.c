@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 20:45:50 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 19:31:24 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 12:04:49 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ void			pad_zero(t_printf *pf, int pad, char c)
 	char	*s;
 	int		i;
 
-	s = ft_strnew(pad);
-	ft_memset(s, c, pad);
-	if (c == ' ')
-		i = 0;
-	else
-		i = ((pf->fspec.buffer[0] == '-') ? 1 : 0);
-	insert_substring(pf->fspec.buffer, s, i + 1);
-	ft_strdel(&s);
+	i = 0;
+	s = ft_strnew(ft_strlen(pf->fspec.buffer) + pad);
+	if (c == '0' && *(pf->fspec.buffer) == '-')
+	{
+		s[i] = pf->fspec.buffer[i];
+		++i;
+	}
+	ft_memset(s + i, c, pad);
+	ft_strcpy(s + i + pad, pf->fspec.buffer);
+	ft_strdel(&(pf->fspec.buffer));
+	pf->fspec.buffer = s;
 }
 
 void			format_width(t_printf *pf)

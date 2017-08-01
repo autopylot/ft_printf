@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/13 14:55:09 by wlin              #+#    #+#              #
-#    Updated: 2017/07/29 13:58:26 by wlin             ###   ########.fr        #
+#    Updated: 2017/08/01 10:48:37 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,10 @@ pdispatch.c \
 ft_printf.c
 
 SRC = \
-$(addprefix $(SRC_DIR), $(SRC_FILES)) \
-#$(addprefix $(LIB_DIR), $(addsuffix .c, $(LIBFT_FILE)))
+$(addprefix $(SRC_DIR), $(SRC_FILES))
 
 OBJ = \
-$(addprefix $(BUILD_DIR), $(SRC_FILES:.c=.o)) \
-#$(addprefix $(BUILD_DIR), $(addsuffix .o, $(LIBFT_FILE)))
-
+$(addprefix $(BUILD_DIR), $(SRC_FILES:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -52,16 +49,9 @@ $(BUILD_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $<
 
-# $(OBJ): $(SRC) $(BUILD_DIR)
-# 	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $<
-
-# $(BUILD_DIR):
-# 	@mkdir $(BUILD_DIR)
-
 test: re
 	@$(CC) $(CFLAGS) -I $(INC_DIR) test.c -L. -lftprintf
 	@./a.out
-	@rm ./a.out
 
 norme:
 	norminette ./libft/

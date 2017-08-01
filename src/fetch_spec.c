@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 19:25:20 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 18:30:23 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 18:42:36 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static char *fetch_char(t_printf *pf)
 	{
 		s = ft_strnew(1);
 		s[0] = va_arg(pf->ap, int);
-		if (s[0] == 0)
-			++pf->len;
+		// if (s[0] == 0)
+		// 	++pf->len;
 		return (s);
 	}
 	else if (pf->fspec.spec == 's' || pf->fspec.spec == 'S')

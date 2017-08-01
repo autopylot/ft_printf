@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/08/01 10:50:36 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 14:18:12 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			if (!parse_fspec(&pf, &format))
-				return (-1);
+				return (0);
 		}
 		else
 		{

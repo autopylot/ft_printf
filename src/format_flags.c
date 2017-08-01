@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 21:13:25 by wlin              #+#    #+#             */
-/*   Updated: 2017/08/01 12:03:33 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 14:32:03 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,21 @@ static	void	format_prefix2(t_printf *pf)
 	len = ft_strlen(pf->fspec.buffer);
 	while (WS(pf->fspec.buffer[i]))
 		++i;
-	if (pf->fspec.precision == -1 && pf->fspec.buffer[i] == '0' && i >= 2)
-	{
-		ft_memcpy(pf->fspec.buffer + i, PREFIX(pf->fspec.spec), 2);
-		return ;
-	}
-	else if (i >= 2)
+	if (i > 1)
 	{
 		ft_memcpy(pf->fspec.buffer + i - 2, PREFIX(pf->fspec.spec), 2);
 		return ;
 	}
-	if (pf->fspec.precision == -1 && i == 1)
-		ft_memmove(pf->fspec.buffer, pf->fspec.buffer + i, len);
+	if (pf->fspec.precision == -1)
+	{
+		if (pf->fspec.buffer[i] == '0' && pf->fspec.buffer[i + 1] == '0')
+		{
+			ft_memcpy(pf->fspec.buffer + i, PREFIX(pf->fspec.spec), 2);
+			return ;
+		}
+	}
+	if (i == 1 || (pf->fspec.precision == -1 && pf->fspec.buffer[i] == '0'))
+		ft_memmove(pf->fspec.buffer, pf->fspec.buffer + 1, len);
 	pf->fspec.buffer = strjoin_f(PREFIX(pf->fspec.spec), pf->fspec.buffer, 'R');
 }
 
@@ -79,15 +82,16 @@ void			format_plus(t_printf *pf)
 		return ;
 	while (WS(pf->fspec.buffer[i]))
 		++i;
-	if (pf->fspec.precision > -1 && i > 0)
+	if (i > 0)
 		pf->fspec.buffer[i - 1] = '+';
-	else if (i > 0)
-	{
-		if (pf->fspec.buffer[i] == '0' && pf->fspec.width == 0)
+	else if (i > 0 && pf->fspec.buffer[i] == '0' && pf->fspec.precision == -1)
 			pf->fspec.buffer[i] = '+';
-		else
+	else if (i > 0 && pf->fspec.buffer[i] != '0')
 			pf->fspec.buffer[i - 1] = '+';
-	}
+	else if (pf->fspec.sints == 0)
+		pf->fspec.buffer = strjoin_f("+", pf->fspec.buffer, 'R');
+	else if (pf->fspec.precision == -1 && pf->fspec.buffer[i] == '0')
+		pf->fspec.buffer[i] = '+';
 	else
 		pf->fspec.buffer = strjoin_f("+", pf->fspec.buffer, 'R');
 }

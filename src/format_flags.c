@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 21:13:25 by wlin              #+#    #+#             */
-/*   Updated: 2017/08/01 14:32:03 by wlin             ###   ########.fr       */
+/*   Updated: 2017/08/01 15:06:37 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,22 @@ void			format_plus(t_printf *pf)
 
 void			format_left(t_printf *pf)
 {
-	int i;
-	int len;
+	int		i;
+	int		len;
+	char	*s;
+	char	*ptr;
 
 	i = 0;
+	ptr = pf->fspec.buffer;
 	len = ft_strlen(pf->fspec.buffer);
-	while (WS(pf->fspec.buffer[i]))
-		++i;
-	if (pf->fspec.space)
-		--i;
-	if (i > 0)
-	{
-		ft_memmove(pf->fspec.buffer, pf->fspec.buffer + i, len - i);
-		ft_memset(pf->fspec.buffer + len - i, ' ', i);
-	}
+	s = ft_strnew(len);
+	while (WS(*ptr))
+		++ptr;
+	while(*ptr)
+		s[i++] = *ptr++;
+	while (i < len)
+		s[i++] = ' ';
+	ft_strdel(&(pf->fspec.buffer));
+	pf->fspec.buffer = s;
+	ft_strdel(&s);
 }

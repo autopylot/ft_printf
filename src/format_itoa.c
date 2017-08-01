@@ -6,13 +6,13 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 11:13:23 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 14:42:04 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 19:08:27 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char *sitoa_base(t_printf *pf, int base)
+char	*sitoa_base(t_printf *pf, int base)
 {
 	char		*s;
 	int			len;
@@ -24,8 +24,6 @@ char *sitoa_base(t_printf *pf, int base)
 		return (NULL);
 	tmp = pf->fspec.sints;
 	nbr = tmp;
-	if (tmp == 0)
-		return (ft_strdup("0"));
 	len = (pf->fspec.sints < 0 && base == 10 ? 2 : 1);
 	while (nbr /= base)
 		++len;
@@ -37,18 +35,17 @@ char *sitoa_base(t_printf *pf, int base)
 		s[--len] = (rem > 9 ? rem - 10 + 'a' : rem + '0');
 		tmp = ABS((tmp / base));
 	}
-	if (pf->fspec.sints < 0)
-		s[--len] = '-';
+	s[--len] = ((pf->fspec.sints < 0) ? '-' : '0');
 	return (s);
 }
 
-char *uitoa_base(t_printf *pf, int base)
+char	*uitoa_base(t_printf *pf, int base)
 {
-	int len;
-	char *s;
-	char c;
-	uintmax_t nbr;
-	uintmax_t tmp;
+	int			len;
+	char		*s;
+	char		c;
+	uintmax_t	nbr;
+	uintmax_t	tmp;
 
 	len = 1;
 	if (base < 2 || base > 16)

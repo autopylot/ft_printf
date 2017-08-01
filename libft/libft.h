@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 09:05:36 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 14:50:54 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 19:59:23 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			*ft_memchr(const void *s, int c, size_t n);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			*ft_memmove(void *dst, const void *src, size_t n);
 void			*ft_memalloc(size_t size);
-void 			ft_putchar(char c);
+void			ft_putchar(char c);
 void			ft_putstr(char const *s);
 char			*ft_strcat(char *dst, const char *src);
 char			*ft_strchr(const char *s, int c);

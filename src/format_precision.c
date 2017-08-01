@@ -6,44 +6,45 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 14:01:56 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 14:51:49 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 19:12:26 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char *substring(char *string, int position, int length)
+char		*substring(char *string, int position, int length)
 {
-  char *pointer;
-  int c;
+	char	*pointer;
+	int		c;
 
-   c = -1;
-  pointer = malloc(length+1);
-  if( pointer == NULL )
-	  exit(EXIT_FAILURE);
-  while (++c < length)
-	 *(pointer+c) = *((string+position-1)+c);
-  *(pointer+c) = '\0';
-  return pointer;
+	c = -1;
+	pointer = malloc(length + 1);
+	if (pointer == NULL)
+		exit(EXIT_FAILURE);
+	while (++c < length)
+		*(pointer + c) = *((string + position - 1) + c);
+	*(pointer + c) = '\0';
+	return (pointer);
 }
 
-void insert_substring(char *a, char *b, int position)
+void		insert_substring(char *a, char *b, int position)
 {
-  char *f, *e;
-  int length;
+	char	*f;
+	char	*e;
+	int		length;
 
-  length = ft_strlen(a);
-  f = substring(a, 1, position - 1 );
-  e = substring(a, position, length-position+1);
-  ft_strcpy(a, "");
-  ft_strcat(a, f);
-  free(f);
-  ft_strcat(a, b);
-  ft_strcat(a, e);
-  free(e);
+	length = ft_strlen(a);
+	f = substring(a, 1, position - 1);
+	e = substring(a, position, length - position + 1);
+	ft_strcpy(a, "");
+	ft_strcat(a, f);
+	free(f);
+	ft_strcat(a, b);
+	ft_strcat(a, e);
+	free(e);
 }
 
-static int sig_num(char *buffer)
+static int	sig_num(char *buffer)
 {
 	int i;
 
@@ -57,7 +58,7 @@ static int sig_num(char *buffer)
 	return (i);
 }
 
-void format_precision(t_printf *pf)
+void		format_precision(t_printf *pf)
 {
 	int pad;
 

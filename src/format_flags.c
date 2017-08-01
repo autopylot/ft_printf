@@ -6,13 +6,37 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 21:13:25 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 14:57:54 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 19:04:29 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void format_prefix(t_printf *pf)
+static	void	format_prefix2(t_printf *pf)
+{
+	int i;
+	int len;
+
+	i = 0;
+	len = ft_strlen(pf->fspec.buffer);
+	while (WS(pf->fspec.buffer[i]))
+		++i;
+	if (pf->fspec.precision == -1 && pf->fspec.buffer[i] == '0' && i >= 2)
+	{
+		ft_memcpy(pf->fspec.buffer + i, PREFIX(pf->fspec.spec), 2);
+		return ;
+	}
+	else if (i >= 2)
+	{
+		ft_memcpy(pf->fspec.buffer + i - 2, PREFIX(pf->fspec.spec), 2);
+		return ;
+	}
+	if (pf->fspec.precision == -1 && i == 1)
+		ft_memmove(pf->fspec.buffer, pf->fspec.buffer + i, len);
+	pf->fspec.buffer = strjoin_f(PREFIX(pf->fspec.spec), pf->fspec.buffer, 'R');
+}
+
+void			format_prefix(t_printf *pf)
 {
 	int i;
 
@@ -29,23 +53,10 @@ void format_prefix(t_printf *pf)
 			pf->fspec.buffer = strjoin_f("0", pf->fspec.buffer, 'R');
 	}
 	else if ((ft_strchr("xX", pf->fspec.spec) && pf->fspec.uints != 0))
-	{
-		while (WS(pf->fspec.buffer[i]))
-			++i;
-		if (pf->fspec.precision == -1 && pf->fspec.buffer[i] == '0')
-			ft_memcpy(pf->fspec.buffer + i, PREFIX(pf->fspec.spec), 2);
-		else if (i >= 2)
-			ft_memcpy(pf->fspec.buffer + i - 2, PREFIX(pf->fspec.spec), 2);
-		else
-		{
-			if (pf->fspec.precision == -1 && i == 1)
-				ft_memmove(pf->fspec.buffer, pf->fspec.buffer + i, ft_strlen(pf->fspec.buffer));
-			pf->fspec.buffer = strjoin_f(PREFIX(pf->fspec.spec), pf->fspec.buffer, 'R');
-		}
-	}
+		format_prefix2(pf);
 }
 
-void format_space(t_printf *pf)
+void			format_space(t_printf *pf)
 {
 	if (!F_SINT(pf->fspec.spec))
 		return ;
@@ -59,7 +70,7 @@ void format_space(t_printf *pf)
 		pf->fspec.buffer = strjoin_f(" ", pf->fspec.buffer, 'R');
 }
 
-void format_plus(t_printf *pf)
+void			format_plus(t_printf *pf)
 {
 	int i;
 
@@ -83,33 +94,20 @@ void format_plus(t_printf *pf)
 		pf->fspec.buffer = strjoin_f("+", pf->fspec.buffer, 'R');
 }
 
-void format_left(t_printf *pf)
+void			format_left(t_printf *pf)
 {
 	int i;
+	int len;
 
 	i = 0;
+	len = ft_strlen(pf->fspec.buffer);
 	while (WS(pf->fspec.buffer[i]))
 		++i;
 	if (pf->fspec.space)
 		--i;
 	if (i > 0)
 	{
-		ft_memmove(pf->fspec.buffer, pf->fspec.buffer + i, ft_strlen(pf->fspec.buffer) - i);
-		ft_memset(pf->fspec.buffer + ft_strlen(pf->fspec.buffer) - i, ' ', i);
+		ft_memmove(pf->fspec.buffer, pf->fspec.buffer + i, len - i);
+		ft_memset(pf->fspec.buffer + len - i, ' ', i);
 	}
-}
-
-void pad_zero(t_printf *pf, int pad, char c)
-{
-	char *s;
-	int i;
-
-	s = ft_strnew(pad);
-	ft_memset(s, c, pad);
-	if (c == ' ')
-		i = 0;
-	else
-		i = ((pf->fspec.buffer[0] == '-') ? 1 : 0);
-	insert_substring(pf->fspec.buffer, s, i + 1);
-	ft_strdel(&s);
 }

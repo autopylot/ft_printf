@@ -6,13 +6,13 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 19:25:20 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 18:42:36 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 18:49:33 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static intmax_t fetch_signed(t_printf *pf)
+static	intmax_t	fetch_signed(t_printf *pf)
 {
 	if (pf->fspec.length == 0 && pf->fspec.spec != 'D')
 		return (va_arg(pf->ap, int));
@@ -27,11 +27,11 @@ static intmax_t fetch_signed(t_printf *pf)
 	else if (pf->fspec.length == 5)
 		return (va_arg(pf->ap, intmax_t));
 	else if (pf->fspec.length == 6)
-	 	return (va_arg(pf->ap, size_t));
+		return (va_arg(pf->ap, size_t));
 	return (0);
 }
 
-static uintmax_t fetch_unsigned(t_printf *pf)
+static	uintmax_t	fetch_unsigned(t_printf *pf)
 {
 	if (pf->fspec.spec == 'p')
 		return ((uintmax_t)va_arg(pf->ap, void*));
@@ -52,11 +52,11 @@ static uintmax_t fetch_unsigned(t_printf *pf)
 	return (0);
 }
 
-static char *fetch_char(t_printf *pf)
+static	char		*fetch_char(t_printf *pf)
 {
 	char *s;
 
-	if (pf->fspec.length == 3 )
+	if (pf->fspec.length == 3)
 	{
 		if (pf->fspec.spec == 'c')
 			return (set_wide(va_arg(pf->ap, wchar_t)));
@@ -67,8 +67,6 @@ static char *fetch_char(t_printf *pf)
 	{
 		s = ft_strnew(1);
 		s[0] = va_arg(pf->ap, int);
-		// if (s[0] == 0)
-		// 	++pf->len;
 		return (s);
 	}
 	else if (pf->fspec.spec == 's' || pf->fspec.spec == 'S')
@@ -76,7 +74,7 @@ static char *fetch_char(t_printf *pf)
 	return (NULL);
 }
 
-void fetch_spec(t_printf *pf)
+void				fetch_spec(t_printf *pf)
 {
 	if (F_SINT(pf->fspec.spec))
 	{

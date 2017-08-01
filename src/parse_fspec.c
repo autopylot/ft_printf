@@ -6,13 +6,13 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 11:41:47 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 12:17:05 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 19:33:43 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static	int parse_flag(t_fmt_spec *fspec, char flag)
+static	int		parse_flag(t_fmt_spec *fspec, char flag)
 {
 	if (flag == '-')
 		return (fspec->left = 1);
@@ -27,7 +27,7 @@ static	int parse_flag(t_fmt_spec *fspec, char flag)
 	return (0);
 }
 
-static	int parse_number(t_fmt_spec *fspec, char width)
+static	int		parse_number(t_fmt_spec *fspec, char width)
 {
 	if (F_NUM(width))
 	{
@@ -40,7 +40,7 @@ static	int parse_number(t_fmt_spec *fspec, char width)
 	return (-1);
 }
 
-static	int parse_length(t_fmt_spec *fspec, char len)
+static	int		parse_length(t_fmt_spec *fspec, char len)
 {
 	if (fspec->length == 0 && F_LEN(len))
 	{
@@ -59,18 +59,18 @@ static	int parse_length(t_fmt_spec *fspec, char len)
 	return (0);
 }
 
-static	int parse_spec(t_fmt_spec *fspec, char type)
+static	int		parse_spec(t_fmt_spec *fspec, char type)
 {
 	if (F_SPEC(type))
 		return (fspec->spec = type);
 	return (0);
 }
 
-int	parse_fspec(t_printf *pf, const char **fmt)
+int				parse_fspec(t_printf *pf, const char **fmt)
 {
 	if (*(*fmt) == '%')
 		++(*fmt);
-	if(*(*fmt) == '%')
+	if (*(*fmt) == '%')
 	{
 		ft_putchar(*(*fmt)++);
 		++pf->len;
@@ -88,14 +88,4 @@ int	parse_fspec(t_printf *pf, const char **fmt)
 	ft_strdel(&(pf->fspec.buffer));
 	init(&(pf->fspec));
 	return (1);
-	// 	++(*fmt);
-	// 	if (pdispatch(pf))
-	// 	{
-	// 		ft_strdel(&(pf->fspec.buffer));
-	// 		init(&(pf->fspec));
-	// 	}
-	// 	return (1);
-	// }
-	// else
-	// 	return (0);
 }

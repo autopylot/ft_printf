@@ -6,13 +6,13 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 14:31:55 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 19:32:25 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void init(t_fmt_spec *fspec)
+void	init(t_fmt_spec *fspec)
 {
 	fspec->left = 0;
 	fspec->pad = 0;
@@ -28,7 +28,7 @@ void init(t_fmt_spec *fspec)
 	fspec->buffer = NULL;
 }
 
-int	ft_printf(const char *format,...)
+int		ft_printf(const char *format, ...)
 {
 	t_printf	pf;
 

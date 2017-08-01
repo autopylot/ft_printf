@@ -6,13 +6,13 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 18:43:46 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 20:00:54 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void pdispatch(t_printf *pf)
+void	pdispatch(t_printf *pf)
 {
 	int i;
 
@@ -34,17 +34,13 @@ void pdispatch(t_printf *pf)
 		format_left(pf);
 	while (pf->fspec.buffer[++i])
 	{
-			ft_putchar(pf->fspec.buffer[i]);
-			if ((pf->fspec.spec == 'c' || pf->fspec.spec == 's') && pf->fspec.length == 3)
-			{
-				if (i % 4 == 0)
-					++pf->len;
-			}
-			else
+		ft_putchar(pf->fspec.buffer[i]);
+		if ((pf->fspec.spec == 'c' || pf->fspec.spec == 's') && pf->fspec.length == 3)
+		{
+			if (i % 4 == 0)
 				++pf->len;
+		}
+		else
+			++pf->len;
 	}
-
-	// ft_putstr(pf->fspec.buffer);
-	// pf->len += ft_strlen(pf->fspec.buffer);
-	//return (1);
 }

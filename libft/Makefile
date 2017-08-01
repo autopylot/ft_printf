@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/28 21:23:39 by wlin              #+#    #+#              #
-#    Updated: 2017/07/29 12:24:27 by wlin             ###   ########.fr        #
+#    Updated: 2017/07/31 14:52:23 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,10 @@ ft_strdup \
 ft_strlen \
 ft_strnew \
 strjoin_f \
-ft_memset
+ft_memset \
+ft_isalnum \
+ft_isdigit \
+ft_isalpha 
 
 all: $(NAME)
 

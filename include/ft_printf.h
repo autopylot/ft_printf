@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 20:19:24 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 12:18:40 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 14:27:02 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 #define F_SPEC(x)	(F_CHR(x) || F_SINT(x) || F_UINT(x))
 #define F_CHR(x)	(x == 's' || x == 'S' || x == 'c' || x == 'C')
 #define F_SINT(x)	(x == 'd' || x == 'D' || x == 'i')
-#define F_UINT(x)	(x == 'u' || x == 'o' || x == 'x' || x == 'p' || F_UPINT(x))
-#define	F_UPINT(x)	(x == 'X' || x == 'U' || x == 'O')
+#define F_UINT(x)	(x == 'u' || x == 'o' || x == 'x' || x == 'p' || x == 'X'|| F_UPINT(x))
+#define	F_UPINT(x)	(x == 'U' || x == 'O')
 #define PREFIX(x) 	(x == 'X' ? "0X" : "0x")
 
 /*

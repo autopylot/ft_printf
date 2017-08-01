@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 14:01:56 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 12:19:44 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 14:51:49 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,19 @@ void insert_substring(char *a, char *b, int position)
   free(e);
 }
 
-// static int sig_num(char *buffer)
-// {
-// 	int i;
-//
-// 	i = 0;
-// 	while (!(*buffer >= '1' && *buffer <= '9') && *buffer)
-// 		++buffer;
-// 	while ((*buffer >= '0' && *buffer <= '9') && *buffer)
-// 	{
-// 		++buffer;
-// 		++i;
-// 	}
-// 	return (i);
-// }
+static int sig_num(char *buffer)
+{
+	int i;
+
+	i = 0;
+	while (*buffer)
+	{
+		if (ft_isalnum(*buffer))
+			++i;
+		++buffer;
+	}
+	return (i);
+}
 
 void format_precision(t_printf *pf)
 {
@@ -69,7 +68,7 @@ void format_precision(t_printf *pf)
 			pf->fspec.buffer[0] = '\0';
 			return ;
 		}
-		else if ((pad = pf->fspec.precision - (int)ft_strlen(pf->fspec.buffer)) < 1)
+		else if ((pad = pf->fspec.precision - sig_num(pf->fspec.buffer)) < 1)
 			return ;
 		pad_zero(pf, pad, '0');
 	}

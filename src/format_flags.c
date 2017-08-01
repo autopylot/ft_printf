@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 21:13:25 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 11:02:04 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 14:57:54 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void format_plus(t_printf *pf)
 		++i;
 	if (pf->fspec.precision > -1 && i != 0)
 		pf->fspec.buffer[i - 1] = '+';
+	else if (pf->fspec.sints == 0 && pf->fspec.width == 0)
+		pf->fspec.buffer = strjoin_f("+", pf->fspec.buffer, 'R');
 	else if (pf->fspec.precision == -1 && pf->fspec.buffer[i] == '0')
 	{
 		if (pf->fspec.buffer[i] == '0')

@@ -6,22 +6,11 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/09 18:30:39 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 11:24:16 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 14:31:55 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	ft_error(char const *s, int fd)
-{
-	if (s)
-	{
-		while (*s)
-			write(fd, s++, 1);
-	}
-	return (0);
-}
-
 
 void init(t_fmt_spec *fspec)
 {
@@ -51,7 +40,7 @@ int	ft_printf(const char *format,...)
 		if (*format == '%')
 		{
 			if (!parse_fspec(&pf, &format))
-				return (ft_error("Error\n", 2));
+				return (0);
 		}
 		else
 		{

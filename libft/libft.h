@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 09:05:36 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/29 10:53:58 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 14:50:54 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LIBFT_H
 # define WS(c) (c == ' ' || c == '\t' || c == '\n' || ISSPACE2(c))
 # define ISSPACE2(c) (c == '\r' || c == '\v' || c == '\f')
-# define ABS(x) ((x) < 0 ? -(x) : (x))
+# define ABS(x) ((x) < 0 ? -x : (x))
 # define MALLEN(x) (strlen(x) + 1)
 # define LIM(x) ((x <= 2147483647 && x >= -2147483648) ? 1 : 0)
 
@@ -40,5 +40,7 @@ char			*ft_strdup(const char *s1);
 size_t			ft_strlen(const char *s);
 char			*ft_strnew(size_t size);
 char			*strjoin_f(char *s1, char *s2, char c);
-
+int				ft_isalnum(int c);
+int				ft_isdigit(int c);
+int				ft_isalpha(int c);
 #endif

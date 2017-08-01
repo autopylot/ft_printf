@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 18:30:04 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 18:36:04 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void pdispatch(t_printf *pf)
 {
 	int i;
 
-	i = 0;
+	i = -1;
 	fetch_spec(pf);
 	if (pf->fspec.spec == 'p')
 		pf->fspec.buffer = strjoin_f("0x", pf->fspec.buffer, 'R');
@@ -32,9 +32,9 @@ void pdispatch(t_printf *pf)
 		format_plus(pf);
 	if (pf->fspec.left)
 		format_left(pf);
-	while (pf->fspec.buffer[i])
+	while (pf->fspec.buffer[++i])
 	{
-			ft_putchar(pf->fspec.buffer[i++]);
+			ft_putchar(pf->fspec.buffer[i]);
 			if ((pf->fspec.spec == 'c' || pf->fspec.spec == 's') && pf->fspec.length == 3)
 			{
 				if (i % 4 == 0)

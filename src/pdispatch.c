@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/14 15:03:17 by wlin              #+#    #+#             */
-/*   Updated: 2017/07/31 12:18:39 by wlin             ###   ########.fr       */
+/*   Updated: 2017/07/31 18:30:04 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,15 @@ void pdispatch(t_printf *pf)
 	while (pf->fspec.buffer[i])
 	{
 			ft_putchar(pf->fspec.buffer[i++]);
-			++pf->len;
+			if ((pf->fspec.spec == 'c' || pf->fspec.spec == 's') && pf->fspec.length == 3)
+			{
+				if (i % 4 == 0)
+					++pf->len;
+			}
+			else
+				++pf->len;
 	}
+
 	// ft_putstr(pf->fspec.buffer);
 	// pf->len += ft_strlen(pf->fspec.buffer);
 	//return (1);
